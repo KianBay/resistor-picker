@@ -21,14 +21,28 @@ class db():
             self.setup()
 
     def get_lab_res(self):
-        self.cur.execute("SELECT resistance_value FROM lab_resistors")
-        data = self.cur.fetchall()
-        lst = []
-        for entries in data:
-            lst.append(entries[0])
-            lst.sort(reverse=True)
+        try:
+            self.cur.execute("SELECT resistance_value FROM lab_resistors")
+            data = self.cur.fetchall()
+            lst = []
+            for entries in data:
+                lst.append(entries[0])
+                #lst.sort(reverse=True)
+            return lst
+            
+        except sqlite3.OperationalError as e:
+            self.setup()
+            self.add_lab_res()
+            self.cur.execute("SELECT resistance_value FROM lab_resistors")
+            data = self.cur.fetchall()
+            lst = []
+            for entries in data:
+                lst.append(entries[0])
+                #lst.sort(reverse=True)
+            return lst
+        
 
-        return lst
+        
 
 
 if __name__ == '__main__':
