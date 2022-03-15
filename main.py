@@ -24,4 +24,4 @@ api.add_resource(Resistor, '/api/v1/resistor/<int:target_resistance>')
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(port=4848, debug=True, host='0.0.0.0')
